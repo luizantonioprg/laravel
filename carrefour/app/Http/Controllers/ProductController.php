@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Mail;
+use App\Category;
+use App\SubCategory;
+use App\Product;
+
 
 class ProductController extends Controller
 {
@@ -29,7 +34,10 @@ class ProductController extends Controller
     public function create()
     {
         //
-        return view('products/create');  
+        $categories = Category::all(); 
+        $subcategories = SubCategory::all(); 
+        return view('products/create', compact('categories','subcategories')); 
+        
     }
 
     /**
@@ -41,6 +49,81 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         //
+        // if($request->hasFile('imagem')){
+        //     $fileNameWithExt = $request->file('imagem')->getClientOriginalName();
+        //     $fileNameWithExt = str_replace(" ", "_", $fileNameWithExt);
+        
+        //     $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+        //     $filename = preg_replace("/[^a-zA-Z0-9\s]/", "", $filename);
+        //     $filename = urlencode($filename);
+        
+        //     $extension = $request->file('imagem')->getClientOriginalExtension();
+        
+        //     //$fileNameToStore = $filename.'_'.time().'.'.$extension;
+        //     $fileNameToStore = $filename.'.'.$extension;
+        
+        //     $path = $request->file('imagem')->storeAs('public/',$fileNameToStore);
+        //     //return $fileNameToStore;
+        // }
+
+
+
+
+            $chave_secreta='6LfxpKQaAAAAABnkmpSLKWP2umnto1-6OU4l0bDn';
+            $captcha_data=$request->get('g-recaptcha-response');
+            $resposta = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=$chave_secreta&response=$captcha_data");
+            $toObj = json_decode($resposta);
+           // echo $resposta;
+            if($toObj->success){
+                //echo 'acertou';
+                $request->validate([
+                    'codigo'=>'required',
+                    'titulo'=>'required',
+                    'id_categoria'=>'required',
+                    'id_subcategoria'=>'required',
+                    'imagem'=>'required',
+                    'descricao'=>'required',
+                    'valor'=>'required',
+                    'tags'=>'required',
+                    'status'=>'required',
+                
+
+                ]);
+                $produto = new Product([
+                    'codigo' => $request->get('codigo'),
+                    'titulo' => $request->get('titulo'),
+                    'id_categoria' => $request->get('id_categoria'),
+                    'id_subcategoria' => $request->get('id_subcategoria'),
+                    'imagem' => $request->get('imagem'),
+                    'descricao' => strip_tags($request->get('descricao')),
+                    'valor' => (double)$request->get('valor'),
+                    'tag' => $request->get('tags'),
+                    'status' => $request->get('status'),
+                ]);
+
+                
+    // // email data
+    $email_data = array(
+        'name' => 'dwdawa',
+        'email' => 'kbrdesafio@gmail.com',
+    );
+
+    // send email with the template
+    Mail::send([], $email_data, function ($message) use ($email_data) {
+        $message->to($email_data['email'], $email_data['name'])
+            ->subject('Welcome to MyNotePaper')
+            ->from('kbrdesafio@gmail.com', 'MyNotePaper');
+    });
+            
+                $produto->save();
+            
+                return 'ok';
+            }else{
+                return 'errou o captcha rapaz';
+            }
+
+       
+     
     }
 
     /**

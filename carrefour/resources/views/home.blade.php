@@ -66,7 +66,7 @@
             </div>
         </div>
     </div>
-    <div class="container mt-5">
+    <!-- <div class="container mt-5">
         <div class="row justify-content-left">
             <button class="btn btn-primary mx-2">
                 <a class="text-white mr-2" href="/categories">CATEGORIAS</a>
@@ -78,7 +78,7 @@
                 <a class="text-white mr-2" href="/products">PRODUTOS</a>
             </button>
         </div>
-    </div>
+    </div> -->
 </div>
 
 

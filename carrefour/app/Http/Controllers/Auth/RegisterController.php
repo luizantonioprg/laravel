@@ -68,6 +68,15 @@ class RegisterController extends Controller
      * @return \App\User
      */
 
+     
+    // SOBRESCREVI O METODO E DEI DOIS IMPORTS LA EM CIMA
+    public function register(Request $request){
+        $this->validator($request->all())->validate();
+        event(new Registered($user = $this->create($request->all())));
+        // $this->guard()->login($user);
+        return $this->registered($request, $user)
+                            ?: redirect('/users');
+     }
     protected function create(array $data)
     {
         return User::create([
@@ -79,13 +88,6 @@ class RegisterController extends Controller
         
     }
 
-    // SOBRESCREVI O METODO E DEI DOIS IMPORTS LA EM CIMA
-    public function register(Request $request){
-    $this->validator($request->all())->validate();
-    event(new Registered($user = $this->create($request->all())));
-    // $this->guard()->login($user);
-    return $this->registered($request, $user)
-                        ?: redirect('/users');
- }
+
 
 }
