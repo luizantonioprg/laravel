@@ -1,10 +1,10 @@
 @extends('layouts.app')
 @section('content')
-
-<form class="container" method="post" action="{{ route('products.store') }}" enctype="multipart/form-data">
+<form class="container" method="post" action="{{ route('products.update', $productId->id) }}" enctype="multipart/form-data">
+   @method('PATCH') 
    @csrf
    <h3>
-   CRIAR PRODUTO
+   EDITAR PRODUTO
    <h3>
    <br>
    @if ($errors->has('imagem')) 
@@ -25,16 +25,18 @@
    @endif
    <div class="form-group">
       <label for="codigo">Código:</label>
-      <input type="text" class="form-control" name="codigo" />
+      <input type="text" class="form-control" name="codigo" value="{{ $productId->codigo }}" />
    </div>
    <div class="form-group">
       <label for="titulo">Título:</label>
-      <input type="text" class="form-control" name="titulo"/>
+      <input type="text" class="form-control" name="titulo" value="{{ $productId->titulo }}"/>
    </div>
    <div class="form-group">
       <label for="codigo">Categoria:</label><br>
       <select onchange="searchSubcategories();" name="id_categoria" id="id_categoria" class="form-select" aria-label="Default select example">
-         <option selected >SELECIONAR CATEGORIA</option>
+        
+         <option selected > SELECIONE A CATEGORIA</option>
+      
          @foreach($categories as $s)
          <option value="{{$s->id}}">{{$s->titulo}}</option>
          @endforeach
@@ -43,29 +45,33 @@
    <div class="form-group">
       <label for="codigo">Subcategoria:</label><br>
       <select name="id_subcategoria" id="id_subcategoria" class="form-select" aria-label="Default select example">
-         <!-- <option selected >SELECIONAR SUBCATEGORIA</option>
-         <option value="2">teste</option> -->
+       
+        
       </select>
    </div>
    <div class="form-group">
       <label for="image">Imagem:  </label><br>
-      <input id="file" name="primeiraImagem" type="file" /><br>
-      <div id="jcrop" ></div>
+      <div id="jcrop" >
+         <img src="{{ $productId->imagem }}">
+      </div>
+      <input id="file" name="primeiraImagem" type="file"/><br>
       <label>Recorte da Imagem:  </label><br>
-      <canvas id="canvas"style="border:dashed 5px #bebebe;margin-top:2vh;" ></canvas>
+      <canvas id="canvas" style="border:dashed 5px #bebebe;margin-top:2vh;" ></canvas>
       <input id="png" name="imagem" type="hidden"/>
    </div>
    <div class="form-group">
       <label for="image">Descrição: </label>
-      <textarea class="form-control" id="summary-ckeditor" name="descricao"></textarea>
+      <textarea class="form-control" id="summary-ckeditor" name="descricao">
+      {!!$productId->descricao!!}
+      </textarea>
    </div>
    <div class="form-group">
       <label for="valor">Valor: R$ </label>
-      <input class="money" id="input" name="valor" type="text">
+      <input class="money" id="input" name="valor" type="text" value="{{ $productId->valor }}">
    </div>
    <div class="form-group">
       <label for="tags">Tags: </label>
-      <input type="text" name="tags" id="tags">
+      <input type="text" id="tags" name="tags">
    </div>
    <div class="form-group">
       <label for="status">Status:</label><br>
@@ -75,17 +81,21 @@
          <option value="inativo">inativo</option>
       </select>
    </div>
-   <div class="g-recaptcha" name="g-recaptcha-response" data-sitekey="6LfxpKQaAAAAABClNvRLPpjTZj-5l8iulNWqvYqx"></div>
-   <button type="submit" class="btn btn-primary">CRIAR</button>
-   </div>
+   <!-- <div class="g-recaptcha" name="g-recaptcha-response" data-sitekey="6LfxpKQaAAAAABClNvRLPpjTZj-5l8iulNWqvYqx"></div>
+      </div> -->
+   <button type="submit" class="btn btn-primary">ATUALIZAR</button>
 </form>
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+
+<!-- <script src="https://www.google.com/recaptcha/api.js" async defer></script> -->
 <script src="{{ asset('js/tags-input.js') }}"></script>
 <script>
    var instance = new TagsInput({
        selector: 'tags',
        max : 3
    });
+   instance.addData(['<?php print_r($tagsArr[0]) ?>' , '<?php print_r($tagsArr[1]) ?>' , '<?php print_r($tagsArr[2]) ?>'])
+    
    
    
 </script>

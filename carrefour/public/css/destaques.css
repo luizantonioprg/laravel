@@ -1,0 +1,11 @@
+#sortable li {
+    border: solid 2px black;
+    width: 400px;
+    text-align: center;
+    list-style: none;
+    padding: 5px;
+    border-radius: 5px;
+}
+#naSeguinteOrdem {
+    display: none;
+}

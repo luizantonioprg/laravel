@@ -12,8 +12,10 @@
                     @endif
             </div>
                 <div class="card-header">AÇÕES DE CATEGORIAS</div>
-                <div class="card-body">                                 
+                <div class="card-body">          
+                @if(Auth::user()->privilege=='admin')                       
                     <a href="/categories/create">REGISTRAR NOVA</a>
+                @endif
                     <div class="row">
                     <div class="col-sm-12">
                         <table class="table table-striped">

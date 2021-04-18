@@ -25,8 +25,9 @@
                     @else
                     <h1>SOU USER</h1>
                     @endif -->
-                  
-                    <a href="/register">REGISTRAR NOVO</a>
+                    @if(Auth::user()->privilege=='admin')
+                        <a href="/register">REGISTRAR NOVO</a>
+                    @endif
                     <div class="row">
                     <div class="col-sm-12">
                         <table class="table table-striped">

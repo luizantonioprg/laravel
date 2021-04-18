@@ -23,10 +23,11 @@ class CreateProductsTable extends Migration
             $table->integer('id_subcategoria')->unsigned();
             $table->foreign('id_subcategoria')->references('id')->on('sub_categories')->onDelete('cascade')->onUpdate('cascade');
             $table->text('descricao');
-            $table->binary('imagem');
-            $table->double('valor');
+            $table->binary('imagem')->nullable();
+            $table->float('valor',10,2);
             $table->string('tag');
-            $table->string('status');
+            $table->string('status')->default("ativo");
+            $table->integer('id_destaque')->nullable();
         });
     }
 

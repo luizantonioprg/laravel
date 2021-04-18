@@ -1,31 +1,49 @@
-.tags-input-wrapper{
-  background: transparent;
-  padding: 10px;
-  border-radius: 4px;
-  max-width: 400px;
-  border: 1px solid #ccc
+.tags-input-wrapper {
+    background: transparent;
+    padding: 10px;
+    border-radius: 4px;
+    max-width: 400px;
+    border: 1px solid #ccc;
 }
 
-.tags-input-wrapper input{
-  border: none;
-  background: transparent;
-  outline: none;
-  width: 150px;
+.tags-input-wrapper input {
+    border: none;
+    background: transparent;
+    outline: none;
+    width: 150px;
 }
 
-.tags-input-wrapper .tag{
-  display: inline-block;
-  background-color: #fa0e7e;
-  color: white;
-  border-radius: 40px;
-  padding: 0px 3px 0px 7px;
-  margin-right: 5px;
-  margin-bottom:5px;
-  box-shadow: 0 5px 15px -2px rgba(250 , 14 , 126 , .7)
+.tags-input-wrapper .tag {
+    display: inline-block;
+    background-color: #fa0e7e;
+    color: white;
+    border-radius: 40px;
+    padding: 0px 3px 0px 7px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    box-shadow: 0 5px 15px -2px rgba(250, 14, 126, 0.7);
 }
 
 .tags-input-wrapper .tag a {
-  margin: 0 7px 3px;
-  display: inline-block;
-  cursor: pointer;
+    margin: 0 7px 3px;
+    display: inline-block;
+    cursor: pointer;
+}
+tr.hide-table-padding td {
+    padding: 0;
+}
+
+.expand-button {
+    position: relative;
+}
+
+.accordion-toggle .expand-button:after {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translate(0, -50%);
+    content: "-";
+}
+.accordion-toggle.collapsed .expand-button:after {
+    content: "+";
 }

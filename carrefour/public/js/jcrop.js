@@ -2,6 +2,7 @@
 
 $("#file").change(function(){
 	picture(this);
+	
 });
 
 var picture_width;
@@ -28,6 +29,7 @@ function picture(input) {
 function canvas(coords){
 	var imageObj = $("#jcrop img")[0];
 	var canvas = $("#canvas")[0];
+
 	canvas.width  = coords.w;
 	canvas.height = coords.h;
 	var context = canvas.getContext("2d");
